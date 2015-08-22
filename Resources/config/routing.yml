@@ -1,0 +1,3 @@
+thibautg16_utilisateur_homepage:
+    path:     /hello/{name}
+    defaults: { _controller: Thibautg16UtilisateurBundle:Default:index }
