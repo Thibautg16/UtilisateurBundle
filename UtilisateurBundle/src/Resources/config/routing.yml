@@ -1,0 +1,19 @@
+thibautg16_utilisateur_homepage:
+    path:     /hello/{name}
+    defaults: { _controller: Thibautg16UtilisateurBundle:Default:index }
+
+thibautg16_utilisateur_liste:
+    path:  /utilisateurs/liste
+    defaults: { _controller: SsiUserBundle:User:liste}
+
+thibautg16_utilisateur_ajouter:
+    path:  /utilisateurs/ajouter
+    defaults: { _controller: SsiUserBundle:User:ajouter}
+
+thibautg16_utilisateur_modifier:
+    path:  /utilisateurs/modifier/{idUtilisateur}
+    defaults: { _controller: SsiUserBundle:User:modifier}
+
+thibautg16_utilisateur_supprimer:
+    path:  /utilisateurs/supprimer/{idUtilisateur}
+    defaults: { _controller: SsiUserBundle:User:supprimer}
