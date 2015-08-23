@@ -16,6 +16,10 @@
         "php": ">=5.3.3"
     },
     "autoload": {
+<<<<<<< HEAD
         "psr-0": { "UtilisateurBundle\\": "src" }
+=======
+        "psr-0": { "": "" }
+>>>>>>> dbdf626d6c6ce7a63b8be995f44315164fc5aec2
     }
 }
