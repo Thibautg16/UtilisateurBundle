@@ -1,0 +1,85 @@
+{# Thibautg16/UtilisateurBundle/Resources/views/Utilisateur/ajouter.html.twig #}
+ 
+{% extends "Thibautg16SqueletteBundle::layout.html.twig" %}
+ 
+{% block title %}
+	{{ parent() }}
+{% endblock %}
+
+{% block fil_ariane %} 
+	{{ parent() }} 
+    <li><a href="">Accueil</a></li>
+    <li><a href="{{ path('thibautg16_utilisateur_liste') }}">Utilisateurs</a></li>
+	<li class="active"><a href="{{ path('thibautg16_utilisateur_ajouter') }}">Ajouter</a></li>
+{% endblock %}
+
+{% block body_thibautg16 %}
+	<div class="col-sm-12">    
+		<fieldset>       
+			<legend><h3>Ajout d'un Utilisateur</h3></legend>
+			<div class="well">
+				{{ form_start(form, {'attr': {'class': 'form-horizontal'}}) }}
+				
+                {# Les erreurs générales du formulaire. #}
+				{{ form_errors(form) }}
+					
+                <div class="form-group">
+					{{ form_label(form.username, "Nom :", {'label_attr': {'class': 'col-sm-3 control-label'}}) }}
+					{{ form_errors(form.username) }}
+					<div class="col-sm-4">
+						{{ form_widget(form.username, {'attr': {'class': 'form-control'}}) }}
+					</div>
+				</div>
+                
+                <div class="form-group">
+					{{ form_label(form.email, "Email :", {'label_attr': {'class': 'col-sm-3 control-label'}}) }}
+					{{ form_errors(form.email) }}
+					<div class="col-sm-4">
+						{{ form_widget(form.email, {'attr': {'class': 'form-control'}}) }}
+					</div>
+				</div>
+                
+                <div class="form-group">
+					{{ form_label(form.password.password, "Mot De Passe :", {'label_attr': {'class': 'col-sm-3 control-label'}}) }}
+					{{ form_errors(form.password.password) }}
+					<div class="col-sm-4">
+						{{ form_widget(form.password.password, {'attr': {'class': 'form-control'}}) }}
+					</div>
+				</div>
+
+                <div class="form-group">
+					{{ form_label(form.password.confirm, "Confirmation MDP :", {'label_attr': {'class': 'col-sm-3 control-label'}}) }}
+					{{ form_errors(form.password.confirm) }}
+					<div class="col-sm-4">
+						{{ form_widget(form.password.confirm, {'attr': {'class': 'form-control'}}) }}
+					</div>
+				</div>
+                                
+                <div class="form-group">
+					{{ form_label(form.Active, "Actif :", {'label_attr': {'class': 'col-sm-3 control-label'}}) }}
+					{{ form_errors(form.Active) }}
+					<div class="col-sm-4">
+						{{ form_widget(form.Active, {'attr': {'class': 'form-control'}}) }}
+					</div>
+				</div>
+                					
+                <div class="form-group">
+					<span class="col-sm-3 control-label"> &nbsp; </span>
+					<div class="col-sm-4 btn-center">
+						{# Pour le bouton, pas de label ni d'erreur, on affiche juste le widget #}
+						{{ form_widget(form.Ajouter, {'attr': {'class': 'btn btn-primary'}}) }} 
+					</div>
+				</div>     
+							
+				{# Génération automatique des champs pas encore écrits #}
+				{{ form_rest(form) }}
+						  
+				{# Fermeture de la balise <form> du formulaire HTML #}
+				{{ form_end(form) }}  
+				
+				
+				<div class="text-center alert alert-danger" role="alert"> Attention pour des raisons de sécurité, le mot de passe n'est pas envoyé par Email, vous devez le faire parvenir à l'utilisateur.<br/>
+					Ce dernier pourra le modifier depuis son espace Utilisateur</div>
+  		</fieldset>        
+	</div>
+{% endblock %}

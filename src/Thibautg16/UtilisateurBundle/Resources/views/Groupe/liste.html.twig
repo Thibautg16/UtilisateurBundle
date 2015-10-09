@@ -1,0 +1,54 @@
+{# Thibautg16/groupeBundle/Resources/views/Groupe/liste.html.twig #}
+ 
+{% extends "Thibautg16SqueletteBundle::layout.html.twig" %}
+ 
+{% block title %}
+	{{ parent() }} - Liste Groupes
+{% endblock %}
+
+{% block fil_ariane %} 
+	{{ parent() }} 
+    <li><a href="#">Accueil</a></li>
+    <li class="active"><a href="{{ path('thibautg16_groupe_liste') }}">Groupes</a></li>
+{% endblock %}
+
+{% block body_thibautg16 %}    
+    <div class="col-sm-12">
+        <fieldset>       
+		  <legend><h3>Liste des groupes</h3></legend>
+    	    <input id="filter" class="form-control" type="text" placeholder="Recherche">
+    	    <br/>
+		<table class="table footable" data-page-size="10" data-filter="#filter">
+        	<thead>
+                <tr>
+                    <th data-toggle="true" data-type="numeric">#</th>
+                    <th>Nom</th>
+                    <th>Role</th>
+                    <th>Modifier</th>
+                    <th>Supprimer</th>
+                </tr>
+    		</thead>
+            
+        	<tbody>
+                {% for groupe in listeGroupe %}        
+                <tr>
+                    <td> {{ groupe.id }} </td>
+                    <td> {% if groupe.nom is defined %} {{ groupe.nom }} {% endif %} </td>       
+                    <td> {% if groupe.role is defined %} {{ groupe.role }} {% endif %} </td>
+                    <td><a href="{{ path('thibautg16_groupe_modifier', {'idGroupe':groupe.id}) }}"><span class="glyphicon glyphicon-pencil"></span></a></td>
+                    <td><a href="{{ path('thibautg16_groupe_supprimer', {'idGroupe':groupe.id}) }}"><span class="glyphicon glyphicon-remove"></span></a></td>
+                </tr>
+                {% endfor %}
+    		</tbody>
+
+            <tfoot class="hide-if-no-paging">
+                    <tr>
+                            <td colspan="9">
+                                    <div class="pagination pagination-centered"></div>
+                            </td>
+                    </tr>
+            </tfoot>
+		</table>
+        </fieldset>
+	</div>
+{% endblock %}

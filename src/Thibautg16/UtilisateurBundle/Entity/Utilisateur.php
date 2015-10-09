@@ -1,8 +1,18 @@
 <?php
-
+/*
+ * Thibautg16/UtilisateurBundle/Entity/Utilisateur.php;
+ *
+ * Copyright 2015 GILLARDEAU Thibaut (aka Thibautg16)
+ *
+ * Authors :
+ *  - Gillardeau Thibaut (aka Thibautg16)
+ */
+ 
 namespace Thibautg16\UtilisateurBundle\Entity;
 
 use Doctrine\ORM\Mapping as ORM;
+use Symfony\Component\Security\Core\User\UserInterface;
+use Doctrine\Common\Collections\ArrayCollection;
 
 /**
  * Utilisateur
@@ -10,8 +20,7 @@ use Doctrine\ORM\Mapping as ORM;
  * @ORM\Table()
  * @ORM\Entity
  */
-class Utilisateur
-{
+class Utilisateur implements UserInterface {
     /**
      * @var integer
      *
@@ -24,16 +33,16 @@ class Utilisateur
     /**
      * @var string
      *
-     * @ORM\Column(name="nom", type="string", length=255)
+     * @ORM\Column(name="username", type="string", length=255)
      */
-    private $nom;
+    private $username;
 
     /**
      * @var string
      *
-     * @ORM\Column(name="mdp", type="string", length=255)
+     * @ORM\Column(name="password", type="string", length=255)
      */
-    private $mdp;
+    private $password;
 
     /**
      * @var string
@@ -50,11 +59,15 @@ class Utilisateur
     private $salt;
 
     /**
-     * @var string
-     *
-     * @ORM\Column(name="roles", type="string", length=255)
+     * @ORM\Column(name="roles", type="array")
      */
-    private $roles;
+    private $roles = array();
+    
+    /**
+     * @ORM\ManyToMany(targetEntity="Groupe", inversedBy="users")
+     *
+     */
+    private $groupes;
 
     /**
      * @var boolean
@@ -63,7 +76,12 @@ class Utilisateur
      */
     private $active;
 
+    public function __construct(){
+        $this->groupes = new ArrayCollection();
+        //$this->salt = md5(uniqid(null, true));
 
+    }
+    
     /**
      * Get id
      *
@@ -75,49 +93,49 @@ class Utilisateur
     }
 
     /**
-     * Set nom
+     * Set username
      *
-     * @param string $nom
+     * @param string $username
      * @return Utilisateur
      */
-    public function setNom($nom)
+    public function setUsername($username)
     {
-        $this->nom = $nom;
+        $this->username = $username;
 
         return $this;
     }
 
     /**
-     * Get nom
+     * Get username
      *
      * @return string 
      */
-    public function getNom()
+    public function getUsername()
     {
-        return $this->nom;
+        return $this->username;
     }
 
     /**
-     * Set mdp
+     * Set password
      *
-     * @param string $mdp
+     * @param string $password
      * @return Utilisateur
      */
-    public function setMdp($mdp)
+    public function setPassword($password)
     {
-        $this->mdp = $mdp;
+        $this->password = $password;
 
         return $this;
     }
 
     /**
-     * Get mdp
+     * Get password
      *
      * @return string 
      */
-    public function getMdp()
+    public function getPassword()
     {
-        return $this->mdp;
+        return $this->password;
     }
 
     /**
@@ -169,24 +187,21 @@ class Utilisateur
     /**
      * Set roles
      *
-     * @param string $roles
      * @return Utilisateur
      */
     public function setRoles($roles)
     {
         $this->roles = $roles;
-
+    
         return $this;
     }
 
     /**
      * Get roles
-     *
-     * @return string 
      */
     public function getRoles()
     {
-        return $this->roles;
+        foreach($this->groupes as $groupe){$roles[]=$groupe->getRole(); } return $roles; 
     }
 
     /**
@@ -210,5 +225,42 @@ class Utilisateur
     public function getActive()
     {
         return $this->active;
+    }
+    
+    public function eraseCredentials(){
+  	
+	}
+
+    /**
+     * Add groupes
+     *
+     * @param \Thibautg16\UtilisateurBundle\Entity\Groupe $groupes
+     * @return Utilisateur
+     */
+    public function addGroupe(\Thibautg16\UtilisateurBundle\Entity\Groupe $groupes)
+    {
+        $this->groupes[] = $groupes;
+
+        return $this;
+    }
+
+    /**
+     * Remove groupes
+     *
+     * @param \Thibautg16\UtilisateurBundle\Entity\Groupe $groupes
+     */
+    public function removeGroupe(\Thibautg16\UtilisateurBundle\Entity\Groupe $groupes)
+    {
+        $this->groupes->removeElement($groupes);
+    }
+
+    /**
+     * Get groupes
+     *
+     * @return \Doctrine\Common\Collections\Collection 
+     */
+    public function getGroupes()
+    {
+        return $this->groupes;
     }
 }

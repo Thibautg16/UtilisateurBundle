@@ -1,19 +1,70 @@
+#  
+# Thibautg16/UtilisateurBundle/Controller/UtilisateurController.php;
+#
+# Copyright 2015 GILLARDEAU Thibaut (aka Thibautg16)
+#
+# Authors :
+#  - Gillardeau Thibaut (aka Thibautg16)
+#
+
+login:
+    path:   /login
+    defaults:  { _controller: Thibautg16UtilisateurBundle:Security:login }
+
+login_check:
+    path:  /login_check
+
+logout:
+    path:   /logout
+ 
 thibautg16_utilisateur_homepage:
     path:     /hello/{name}
     defaults: { _controller: Thibautg16UtilisateurBundle:Default:index }
 
 thibautg16_utilisateur_liste:
-    path:  /utilisateurs/liste
-    defaults: { _controller: SsiUserBundle:User:liste}
+    path:  /utilisateur/liste
+    defaults: { _controller: Thibautg16UtilisateurBundle:Utilisateur:liste}
 
 thibautg16_utilisateur_ajouter:
-    path:  /utilisateurs/ajouter
-    defaults: { _controller: SsiUserBundle:User:ajouter}
+    path:  /utilisateur/ajouter
+    defaults: { _controller: Thibautg16UtilisateurBundle:Utilisateur:ajouter}
 
 thibautg16_utilisateur_modifier:
-    path:  /utilisateurs/modifier/{idUtilisateur}
-    defaults: { _controller: SsiUserBundle:User:modifier}
+    path:  /utilisateur/modifier/{idUtilisateur}
+    defaults: { _controller: Thibautg16UtilisateurBundle:Utilisateur:modifier}
 
 thibautg16_utilisateur_supprimer:
-    path:  /utilisateurs/supprimer/{idUtilisateur}
-    defaults: { _controller: SsiUserBundle:User:supprimer}
+    path:  /utilisateur/supprimer/{idUtilisateur}
+    defaults: { _controller: Thibautg16UtilisateurBundle:Utilisateur:supprimer}
+
+thibautg16_groupe_liste:
+    path:  /groupe/liste
+    defaults: { _controller: Thibautg16UtilisateurBundle:Groupe:liste}
+    
+thibautg16_groupe_ajouter:
+    path:  /groupe/ajouter
+    defaults: { _controller: Thibautg16UtilisateurBundle:Groupe:ajouter}
+        
+thibautg16_groupe_modifier:
+    path:  /groupe/modifier/{idGroupe}
+    defaults: { _controller: Thibautg16UtilisateurBundle:Groupe:modifier}
+
+thibautg16_groupe_supprimer:
+    path:  /groupe/supprimer/{idGroupe}
+    defaults: { _controller: Thibautg16UtilisateurBundle:Groupe:supprimer}
+
+thibautg16_route_liste:
+    path:  /route/liste
+    defaults: { _controller: Thibautg16UtilisateurBundle:Route:liste}
+
+thibautg16_route_ajouter:
+    path:  /route/ajouter
+    defaults: { _controller: Thibautg16UtilisateurBundle:Route:ajouter}
+        
+thibautg16_route_modifier:
+    path:  /route/modifier/{idRoute}
+    defaults: { _controller: Thibautg16UtilisateurBundle:Route:modifier}
+
+thibautg16_route_supprimer:
+    path:  /route/supprimer/{idRoute}
+    defaults: { _controller: Thibautg16UtilisateurBundle:Route:supprimer}

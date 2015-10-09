@@ -1,0 +1,38 @@
+{# Thibautg16/UtilisateurBundle/Resources/views/Security/login.html.twig #}
+
+{% extends "Thibautg16SqueletteBundle::layout.html.twig" %}
+
+{% block title %}
+  {{ parent() }} - Login
+{% endblock %}
+  
+{% block stylesheets %}
+  {{ parent() }}
+  
+  <!-- Connexion CSS -->
+  <link rel="stylesheet" type="text/css" href="{{ asset('css/connexion.css') }}">
+{% endblock %}
+
+{% block body %}
+  <div class="container">
+    <div class="col-sm-12">
+      {# S'il y a une erreur, on l'affiche dans un joli cadre #}
+      {% if error %}
+        <div class="alert alert-danger">{{ error.message }}</div>
+      {% endif %}
+  
+      {# Le formulaire, avec URL de soumission vers la route « login_check » #}
+      <form action="{{ path('login_check') }}" method="post" class="form-signin" id="signin-form_id">
+        <h2 class="form-signin-heading">Identifiez-vous :</h2>
+      
+        <label for="username" class="sr-only">Nom d'utilisateur :</label>
+        <input type="text" id="username" name="_username" value="{{ last_username }}" class="form-control" placeholder="Nom d'utilisateur" required autofocus />
+  
+        <label for="password" class="sr-only">Mot de passe :</label>
+        <input type="password" id="password" name="_password" class="form-control" placeholder="Mot de passe" required />
+        <br/>    
+        <button class="btn btn-lg btn-primary btn-block" type="submit">Connexion</button>
+      </form>
+    </div>
+  </div>
+{% endblock %}
