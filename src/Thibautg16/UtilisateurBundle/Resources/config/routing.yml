@@ -18,8 +18,8 @@ logout:
     path:   /logout
  
 thibautg16_utilisateur_homepage:
-    path:     /hello/{name}
-    defaults: { _controller: Thibautg16UtilisateurBundle:Default:index }
+    path:     /utilisateur/liste
+    defaults: { _controller: Thibautg16UtilisateurBundle:Utilisateur:liste}
 
 thibautg16_utilisateur_liste:
     path:  /utilisateur/liste

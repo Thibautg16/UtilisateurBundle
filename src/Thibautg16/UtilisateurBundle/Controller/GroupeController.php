@@ -44,15 +44,9 @@ class GroupeController extends Controller{
         }
 
         public function ajouterAction(Request $request){
-                // On récupére les informations de l'utilisateur
-                $user = $this->getUser();
-
-                // Ici, l'utilisateur est anonyme ou l'URL n'est pas derrière un pare-feu
-                if (null === $user) {
-                        return $this->redirect($this->generateUrl('thibautg16_utilisateur_homepage'));
-                }
-                // Ici, $user est une instance de notre classe User et a le role d'Admin
-                elseif($user) {
+                $em = $this->getDoctrine()->getManager();
+                // On vérifie si l'utilisateur (via les groupes) est autorisé à consulter cette page
+                if($em->getRepository('Thibautg16UtilisateurBundle:Groupe')->GroupeAutoriseRoute($this->getUser(), $this->container->get('request')->get('_route')) == TRUE){
                         // Création de l'objet Groupe
                         $oGroupe = new Groupe();
 
@@ -100,15 +94,9 @@ class GroupeController extends Controller{
         }
 
         public function modifierAction($idGroupe, Request $request){
-                // On récupére les informations de l'utilisateur
-                $user = $this->getUser();
-
-                // Ici, l'utilisateur est anonyme ou l'URL n'est pas derrière un pare-feu
-                if (null === $user) {
-                        return $this->redirect($this->generateUrl('thibautg16_utilisateur_homepage'));
-                }
-                // Ici, $user est une instance de notre classe User et est un Admin
-                elseif($user) {
+                $em = $this->getDoctrine()->getManager();
+                // On vérifie si l'utilisateur (via les groupes) est autorisé à consulter cette page
+                if($em->getRepository('Thibautg16UtilisateurBundle:Groupe')->GroupeAutoriseRoute($this->getUser(), $this->container->get('request')->get('_route')) == TRUE){
                         /****** On recherche les informations sur le service demandé ******/
                         // On prépare la connexion avec la bdd
                         $em = $this->getDoctrine()->getManager();
@@ -159,15 +147,9 @@ class GroupeController extends Controller{
         }
 
         public function supprimerAction($idGroupe, Request $request){
-                // On récupére les informations de l'utilisateur
-                $user = $this->getUser();
-
-                // Ici, l'utilisateur est anonyme ou l'URL n'est pas derrière un pare-feu
-                if (null === $user) {
-                        return $this->redirect($this->generateUrl('thibautg16_utilisateur_homepage'));
-                }
-                // Ici, $user est une instance de notre classe User et est un Admin
-                elseif($user) {
+                $em = $this->getDoctrine()->getManager();
+                // On vérifie si l'utilisateur (via les groupes) est autorisé à consulter cette page
+                if($em->getRepository('Thibautg16UtilisateurBundle:Groupe')->GroupeAutoriseRoute($this->getUser(), $this->container->get('request')->get('_route')) == TRUE){
                         // On prépare la connexion avec la bdd
                         $em = $this->getDoctrine()->getManager();
 
