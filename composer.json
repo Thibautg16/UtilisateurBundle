@@ -1,6 +1,6 @@
 {
     "name" : "thibautg16/utilisateur-bundle",
-    "version" : "0.1",
+    "version" : "0.2",
     "homepage" : "https://github.com/Thibautg16/UtilisateurBundle",
     "description" : "Symfony Utilisateur Bundle",
     "keywords" : [
@@ -13,8 +13,13 @@
         "email" : "thibaut@thibaut.ovh"
     }],
     "require": {
-        "php": ">=5.3.3"
+        "php": ">=5.3.9",
+        "symfony/symfony": "2.8.*",
+        "thibautg16/squelette-bundle": "dev-master"
+        
     },
+    "minimum-stability": "dev",
+    "prefer-stable": true,
     "autoload": {
         "psr-0": { "Thibautg16\\UtilisateurBundle\\": "src" }
     }
