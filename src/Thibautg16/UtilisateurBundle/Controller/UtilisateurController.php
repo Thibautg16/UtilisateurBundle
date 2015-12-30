@@ -56,6 +56,7 @@ class UtilisateurController extends Controller{
                           ->add('email',        'text')
                           ->add('password', 'repeated', array('first_name' => 'password', 'second_name' => 'confirm','type' => 'password' ))
                           ->add('Active',       'checkbox', array('required' => false))
+                          ->add('Groupes', 'entity', array('class' => 'Thibautg16UtilisateurBundle:Groupe', 'property' => 'nom', 'multiple' => true))
                           ->add('Ajouter',      'submit')
                         ;
 
@@ -72,8 +73,11 @@ class UtilisateurController extends Controller{
                           $em = $this->getDoctrine()->getManager();
                           //$oUser->setCreePar($user);
                           
-                          $oGroupe = $em->getRepository('Thibautg16UtilisateurBundle:Groupe')->findOneByNom('ADMIN'); 
-			  $oUser->addGroupe($oGroupe);
+                          $factory = $this->container->get('security.encoder_factory');                              
+                          $encoder = $factory->getEncoder($oUser);
+                          $password = $encoder->encodePassword($oUser->getPassword(), $oUser->getSalt());
+                          $oUser->setPassword($password);
+                          
 			  $oUser->setRoles('ROLE_ADMIN'); 
 
                           $em->persist($oUser);
@@ -82,7 +86,7 @@ class UtilisateurController extends Controller{
                           $request->getSession()->getFlashBag()->add('success', 'Création du compte : '.$oUser->getUsername().' effectuée avec succès.');
 
                           // On redirige vers la page de visualisation de l'annonce nouvellement créée
-                          return $this->redirect($this->generateUrl('thibautg16_utilisateurs_liste'));
+                          return $this->redirect($this->generateUrl('thibautg16_utilisateur_liste'));
                         }
 
                         // À ce stade, le formulaire n'est pas valide car :
@@ -141,7 +145,7 @@ class UtilisateurController extends Controller{
                           $request->getSession()->getFlashBag()->add('success', 'Modification du compte : '.$oUtilisateur->getUsername().' effectuée avec succès.');
 
                           // On redirige vers la page de visualisation de l'annonce nouvellement créée
-                          return $this->redirect($this->generateUrl('thibautg16_utilisateurs_liste'));
+                          return $this->redirect($this->generateUrl('thibautg16_utilisateur_liste'));
                         }
 
                         // À ce stade, le formulaire n'est pas valide car :
@@ -176,7 +180,7 @@ class UtilisateurController extends Controller{
                         $request->getSession()->getFlashBag()->add('success', 'Suppression du compte : '.$oUtilisateur->getUsername().' effectuée avec succès.');
 
                         // On redirige vers la liste des services
-                        return $this->redirect($this->generateUrl('thibautg16_utilisateurs_liste'));
+                        return $this->redirect($this->generateUrl('thibautg16_utilisateur_liste'));
                 }
                 // Ici, $user est une instance de notre classe User mais n'est pas Admin
                 else{

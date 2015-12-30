@@ -1,5 +1,5 @@
 <?php
-/*  
+/*
  * Thibautg16/UtilisateurBundle/Controller/SecurityController.php;
  *
  * Copyright 2015 GILLARDEAU Thibaut (aka Thibautg16)
@@ -7,36 +7,32 @@
  * Authors :
  *  - Gillardeau Thibaut (aka Thibautg16)
  */
- 
+
 namespace Thibautg16\UtilisateurBundle\Controller;
 
 use Symfony\Bundle\FrameworkBundle\Controller\Controller;
 use Symfony\Component\HttpFoundation\Request;
 use Symfony\Component\Security\Core\SecurityContext;
 
-class SecurityController extends Controller
-{
-  public function loginAction(Request $request)
-  {
-    // Si le visiteur est déjà identifié, on le redirige vers l'accueil
-    if ($this->get('security.context')->isGranted('IS_AUTHENTICATED_REMEMBERED')) {
-      return $this->redirect($this->generateUrl('oc_platform_accueil'));
-    }
+class SecurityController extends Controller {
+  
+  public function loginAction(Request $request){
+    
+  $authenticationUtils = $this->get('security.authentication_utils');
 
-    $session = $request->getSession();
+    // get the login error if there is one
+    $error = $authenticationUtils->getLastAuthenticationError();
 
-    // On vérifie s'il y a des erreurs d'une précédente soumission du formulaire
-    if ($request->attributes->has(SecurityContext::AUTHENTICATION_ERROR)) {
-      $error = $request->attributes->get(SecurityContext::AUTHENTICATION_ERROR);
-    } else {
-      $error = $session->get(SecurityContext::AUTHENTICATION_ERROR);
-      $session->remove(SecurityContext::AUTHENTICATION_ERROR);
-    }
+    // last username entered by the user
+    $lastUsername = $authenticationUtils->getLastUsername();
 
-    return $this->render('Thibautg16UtilisateurBundle:Security:login.html.twig', array(
-      // Valeur du précédent nom d'utilisateur entré par l'internaute
-      'last_username' => $session->get(SecurityContext::LAST_USERNAME),
-      'error'         => $error,
-    ));
+    return $this->render(
+        'Thibautg16UtilisateurBundle:Security:login.html.twig',
+        array(
+            // last username entered by the user
+            'last_username' => $lastUsername,
+            'error'         => $error,
+        )
+    );
   }
 }

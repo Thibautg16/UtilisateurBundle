@@ -12,6 +12,7 @@ namespace Thibautg16\UtilisateurBundle\Entity;
 
 use Doctrine\ORM\Mapping as ORM;
 use Symfony\Component\Security\Core\User\UserInterface;
+use Symfony\Component\Security\Core\User\EquatableInterface;
 use Doctrine\Common\Collections\ArrayCollection;
 
 /**
@@ -20,7 +21,7 @@ use Doctrine\Common\Collections\ArrayCollection;
  * @ORM\Table()
  * @ORM\Entity
  */
-class Utilisateur implements UserInterface {
+class Utilisateur implements UserInterface, EquatableInterface, \Serializable {
     /**
      * @var integer
      *
@@ -78,7 +79,7 @@ class Utilisateur implements UserInterface {
 
     public function __construct(){
         $this->groupes = new ArrayCollection();
-        //$this->salt = md5(uniqid(null, true));
+        $this->salt = md5(uniqid(null, true));
 
     }
     
@@ -262,5 +263,48 @@ class Utilisateur implements UserInterface {
     public function getGroupes()
     {
         return $this->groupes;
+    }
+    
+    /** @see \Serializable::serialize() */
+    public function serialize()
+    {
+        return serialize(array(
+            $this->id,
+            $this->username,
+            $this->password,
+            $this->salt,
+        ));
+    }
+
+    /** @see \Serializable::unserialize() */
+    public function unserialize($serialized)
+    {
+        list (
+            $this->id,
+            $this->username,
+            $this->password,
+            $this->salt
+        ) = unserialize($serialized);
+    }
+    
+        public function isEqualTo(UserInterface $user)
+    {
+        if (!$user instanceof Utilisateur) {
+            return false;
+        }
+
+        if ($this->password !== $user->getPassword()) {
+            return false;
+        }
+
+        if ($this->salt !== $user->getSalt()) {
+            return false;
+        }
+
+        if ($this->username !== $user->getUsername()) {
+            return false;
+        }
+
+        return true;
     }
 }

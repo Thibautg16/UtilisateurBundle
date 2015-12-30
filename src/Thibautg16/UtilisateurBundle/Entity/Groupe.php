@@ -39,7 +39,7 @@ class Groupe implements RoleInterface
     private $users;
 
     /**
-     * @ORM\ManyToMany(targetEntity="Route", inversedBy="routes")
+     * @ORM\ManyToMany(targetEntity="Route", inversedBy="groupes")
      *
      */
     private $routes;
