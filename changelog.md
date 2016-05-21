@@ -5,7 +5,7 @@ CHANGELOG for 0.2
 	* Feature : gestion des groupes (Entite Groupe)
 	* Feature : gestion des routes (Entite Route)
 	* Feature : gestioon des autorisations à partir des routes de l'application
-    * Update SecurityController 
+    * Update SecurityController (http://symfony.com/blog/new-in-symfony-2-6-security-component-improvements)
 	* Update password level (sha512 + salt)
 	* Bug : inversedBy="routes" => inversedBy="groupes" (Entite Groupe)
 	* Bug : thibautg16_utilisateurs_liste => thibautg16_utilisateur_liste
