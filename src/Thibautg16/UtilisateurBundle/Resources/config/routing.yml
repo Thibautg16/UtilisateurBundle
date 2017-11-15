@@ -18,12 +18,12 @@ logout:
     path:   /logout
  
 thibautg16_utilisateur_homepage:
-    path:     /utilisateur/liste
-    defaults: { _controller: Thibautg16UtilisateurBundle:Utilisateur:liste}
+    path:     /utilisateur/lister
+    defaults: { _controller: Thibautg16UtilisateurBundle:Utilisateur:lister}
 
-thibautg16_utilisateur_liste:
-    path:  /utilisateur/liste
-    defaults: { _controller: Thibautg16UtilisateurBundle:Utilisateur:liste}
+thibautg16_utilisateur_lister:
+    path:  /utilisateur/lister
+    defaults: { _controller: Thibautg16UtilisateurBundle:Utilisateur:lister}
 
 thibautg16_utilisateur_ajouter:
     path:  /utilisateur/ajouter
