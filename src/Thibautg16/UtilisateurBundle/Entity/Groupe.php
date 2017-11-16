@@ -37,13 +37,10 @@ class Groupe implements RoleInterface
 
     /** @ORM\ManyToMany(targetEntity="Utilisateur", mappedBy="groupes") */
     private $users;
+ 
+    /** @ORM\ManyToMany(targetEntity="Role", mappedBy="groupes_role") */
+    private $roles_groupe;
 
-    /**
-     * @ORM\ManyToMany(targetEntity="Route", inversedBy="groupes")
-     *
-     */
-    private $routes;
-    
     public function __construct()
     {
         $this->users = new ArrayCollection();
@@ -133,38 +130,5 @@ class Groupe implements RoleInterface
     public function getUsers()
     {
         return $this->users;
-    }
-
-    /**
-     * Add routes
-     *
-     * @param \Thibautg16\UtilisateurBundle\Entity\Route $routes
-     * @return Groupe
-     */
-    public function addRoute(\Thibautg16\UtilisateurBundle\Entity\Route $routes)
-    {
-        $this->routes[] = $routes;
-
-        return $this;
-    }
-
-    /**
-     * Remove routes
-     *
-     * @param \Thibautg16\UtilisateurBundle\Entity\Route $routes
-     */
-    public function removeRoute(\Thibautg16\UtilisateurBundle\Entity\Route $routes)
-    {
-        $this->routes->removeElement($routes);
-    }
-
-    /**
-     * Get routes
-     *
-     * @return \Doctrine\Common\Collections\Collection 
-     */
-    public function getRoutes()
-    {
-        return $this->routes;
     }
 }

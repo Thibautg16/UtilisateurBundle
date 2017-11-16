@@ -108,12 +108,12 @@ class UtilisateurController extends Controller{
                 
                 // On ajoute les champs de l'entité que l'on veut à notre formulaire
                 $form
-                        ->add('username', TextType::class)
-                        ->add('email',    TextType::class)
-                        ->add('password', RepeatedType::class, array('first_name' => 'password', 'second_name' => 'confirm','type' => PasswordType::class))
-                        ->add('active',   CheckboxType::class, array('required' => false))
-                        ->add('groupes',  EntityType::class, array('class' => 'Thibautg16UtilisateurBundle:Groupe', 'choice_label' => 'nom', 'multiple' => true))
-                        ->add('ajouter',  SubmitType::class)
+                        ->add('username',  TextType::class)
+                        ->add('email',     TextType::class)
+                        ->add('password',  RepeatedType::class, array('first_name' => 'password', 'second_name' => 'confirm','type' => PasswordType::class))
+                        ->add('active',    CheckboxType::class, array('required' => false))
+                        ->add('groupes',   EntityType::class, array('class' => 'Thibautg16UtilisateurBundle:Groupe', 'choice_label' => 'nom', 'multiple' => true))
+                        ->add('modifier',  SubmitType::class)
                 ;
 
                 // On fait le lien Requête <-> Formulaire
@@ -133,7 +133,7 @@ class UtilisateurController extends Controller{
                                 return $this->redirect($this->generateUrl('thibautg16_utilisateur_lister'));
                         }
                 }
-                
+
                 // Le formulaire n'est pas valide, donc on l'affiche de nouveau
                 return $this->render('Thibautg16UtilisateurBundle:Utilisateur:modifier.html.twig', array(
                         'form' => $form->createView(), 'utilisateur' => $oUtilisateur));

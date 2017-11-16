@@ -38,7 +38,7 @@ thibautg16_utilisateur_supprimer:
     defaults: { _controller: Thibautg16UtilisateurBundle:Utilisateur:supprimer}
 
 thibautg16_groupe_liste:
-    path:  /groupe/liste
+    path:  /groupe/lister
     defaults: { _controller: Thibautg16UtilisateurBundle:Groupe:liste}
     
 thibautg16_groupe_ajouter:
@@ -53,18 +53,18 @@ thibautg16_groupe_supprimer:
     path:  /groupe/supprimer/{idGroupe}
     defaults: { _controller: Thibautg16UtilisateurBundle:Groupe:supprimer}
 
-thibautg16_route_liste:
-    path:  /route/liste
-    defaults: { _controller: Thibautg16UtilisateurBundle:Route:liste}
+thibautg16_role_lister:
+    path:  /role/liste
+    defaults: { _controller: Thibautg16UtilisateurBundle:Role:lister}
 
-thibautg16_route_ajouter:
-    path:  /route/ajouter
-    defaults: { _controller: Thibautg16UtilisateurBundle:Route:ajouter}
+thibautg16_role_ajouter:
+    path:  /role/ajouter
+    defaults: { _controller: Thibautg16UtilisateurBundle:Role:ajouter}
         
-thibautg16_route_modifier:
-    path:  /route/modifier/{idRoute}
-    defaults: { _controller: Thibautg16UtilisateurBundle:Route:modifier}
+thibautg16_role_modifier:
+    path:  /role/modifier/{idRole}
+    defaults: { _controller: Thibautg16UtilisateurBundle:Role:modifier}
 
-thibautg16_route_supprimer:
-    path:  /route/supprimer/{idRoute}
-    defaults: { _controller: Thibautg16UtilisateurBundle:Route:supprimer}
+thibautg16_role_supprimer:
+    path:  /role/supprimer/{idRole}
+    defaults: { _controller: Thibautg16UtilisateurBundle:Role:supprimer}

@@ -1,6 +1,6 @@
 <?php
 /*
- * Thibautg16/UtilisateurBundle/Controller/GroupeController.php;
+ * Thibautg16/UtilisateurBundle/Controller/RomeController.php;
  *
  * Copyright 2017 GILLARDEAU Thibaut (aka Thibautg16)
  *
@@ -23,12 +23,12 @@ use Symfony\Component\Form\Extension\Core\Type\RepeatedType;
 use Symfony\Component\Form\Extension\Core\Type\PasswordType;
 use Symfony\Component\Form\Extension\Core\Type\CheckboxType;
 
-use Thibautg16\UtilisateurBundle\Entity\Groupe;
-use Thibautg16\UtilisateurBundle\Form\GroupeType;
+use Thibautg16\UtilisateurBundle\Entity\Role;
+use Thibautg16\UtilisateurBundle\Form\RoleType;
 
 use Doctrine\Common\Collections\ArrayCollection;
 
-class GroupeController extends Controller{
+class RoleController extends Controller{
 
         /**
          * @Security("has_role('ROLE_SUPERADMIN')")
@@ -37,9 +37,9 @@ class GroupeController extends Controller{
                 $em = $this->getDoctrine()->getManager();
 
                 // on liste les objets
-                $listeGroupe = $em->getRepository('Thibautg16UtilisateurBundle:Groupe')->findAll();
+                $listeRole = $em->getRepository('Thibautg16UtilisateurBundle:Role')->findAll();
 
-                return $this->render('Thibautg16UtilisateurBundle:Groupe:lister.html.twig', array('listeGroupe' => $listeGroupe));
+                return $this->render('Thibautg16UtilisateurBundle:Role:lister.html.twig', array('listeRole' => $listeRole));
         }
 
         /**
