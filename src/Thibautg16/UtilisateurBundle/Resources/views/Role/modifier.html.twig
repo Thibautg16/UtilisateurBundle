@@ -1,22 +1,22 @@
-{# Thibautg16/UtilisateurBundle/Resources/views/Route/ajouter.html.twig #}
+{# Thibautg16/UtilisateurBundle/Resources/views/Role/modifier.html.twig #}
  
 {% extends "Thibautg16SqueletteBundle::layout.html.twig" %}
  
 {% block title %}
-	{{ parent() }}
+	{{ parent() }} - Modifier role
 {% endblock %}
 
 {% block fil_ariane %} 
 	{{ parent() }} 
     <li><a href="">Accueil</a></li>
-    <li><a href="{{ path('thibautg16_route_liste') }}">Routes</a></li>
-	<li class="active"><a href="{{ path('thibautg16_route_ajouter') }}">Ajouter</a></li>
+    <li><a href="{{ path('thibautg16_role_lister') }}">Roles</a></li>
+	<li class="active"><a href="">Modifier</a></li>
 {% endblock %}
 
 {% block body_thibautg16 %}
-	<div class="col-sm-12">    
+	<div class="container">    
 		<fieldset>       
-			<legend><h3>Ajout d'une Route</h3></legend>
+			<legend><h3>Modification Role : {{ role.nom }}</h3></legend>
 			<div class="well">
 				{{ form_start(form, {'attr': {'class': 'form-horizontal'}}) }}
 				
@@ -30,20 +30,12 @@
 						{{ form_widget(form.nom, {'attr': {'class': 'form-control'}}) }}
 					</div>
 				</div>
-                
-                <div class="form-group">
-					{{ form_label(form.route, "Route :", {'label_attr': {'class': 'col-sm-3 control-label'}}) }}
-					{{ form_errors(form.route) }}
-					<div class="col-sm-4">
-						{{ form_widget(form.route, {'attr': {'class': 'form-control'}}) }}
-					</div>
-				</div>
                 					
                 <div class="form-group">
 					<span class="col-sm-3 control-label"> &nbsp; </span>
 					<div class="col-sm-4 btn-center">
 						{# Pour le bouton, pas de label ni d'erreur, on affiche juste le widget #}
-						{{ form_widget(form.Ajouter, {'attr': {'class': 'btn btn-primary'}}) }} 
+						{{ form_widget(form.modifier, {'attr': {'class': 'btn btn-primary'}}) }} 
 					</div>
 				</div>     
 							
@@ -52,7 +44,6 @@
 						  
 				{# Fermeture de la balise <form> du formulaire HTML #}
 				{{ form_end(form) }}  
-
   		</fieldset>        
 	</div>
 {% endblock %}

@@ -1,21 +1,21 @@
-{# Thibautg16/groupeBundle/Resources/views/Route/liste.html.twig #}
+{# Thibautg16/UtilisateurBundle/Resources/views/Role/lister.html.twig #}
  
 {% extends "Thibautg16SqueletteBundle::layout.html.twig" %}
  
 {% block title %}
-	{{ parent() }} - Liste Routes
+	{{ parent() }} - Liste Roles
 {% endblock %}
 
 {% block fil_ariane %} 
 	{{ parent() }} 
     <li><a href="#">Accueil</a></li>
-    <li class="active"><a href="{{ path('thibautg16_route_liste') }}">Routes</a></li>
+    <li class="active"><a href="{{ path('thibautg16_role_lister') }}">Roles</a></li>
 {% endblock %}
 
 {% block body_thibautg16 %}    
     <div class="col-sm-12">
         <fieldset>       
-		  <legend><h3>Liste des routes</h3></legend>
+		  <legend><h3>Liste des roles</h3></legend>
     	    <input id="filter" class="form-control" type="text" placeholder="Recherche">
     	    <br/>
 		<table class="table footable" data-page-size="10" data-filter="#filter">
@@ -23,20 +23,18 @@
                 <tr>
                     <th data-toggle="true" data-type="numeric">#</th>
                     <th>Nom</th>
-                    <th>Route</th>
                     <th>Modifier</th>
                     <th>Supprimer</th>
                 </tr>
     		</thead>
             
         	<tbody>
-                {% for route in listeRoute %}        
+                {% for role in listeRoles %}        
                 <tr>
-                    <td> {{ route.id }} </td>
-                    <td> {% if route.nom is defined %} {{ route.nom }} {% endif %} </td>       
-                    <td> {% if route.route is defined %} {{ route.route }} {% endif %} </td>
-                    <td><a href="{{ path('thibautg16_route_modifier', {'idRoute':route.id}) }}"><span class="glyphicon glyphicon-pencil"></span></a></td>
-                    <td><a href="{{ path('thibautg16_route_supprimer', {'idRoute':route.id}) }}"><span class="glyphicon glyphicon-remove"></span></a></td>
+                    <td> {{ role.id }} </td>
+                    <td> {% if role.nom is defined %} {{ role.nom }} {% endif %} </td>       
+                    <td><a href="{{ path('thibautg16_role_modifier', {'idRole':role.id}) }}"><span class="glyphicon glyphicon-pencil"></span></a></td>
+                    <td><a href="{{ path('thibautg16_role_supprimer', {'idRole':role.id}) }}"><span class="glyphicon glyphicon-remove"></span></a></td>
                 </tr>
                 {% endfor %}
     		</tbody>
