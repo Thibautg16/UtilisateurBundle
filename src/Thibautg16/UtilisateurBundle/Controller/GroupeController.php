@@ -98,10 +98,10 @@ class GroupeController extends Controller{
 
                 // On ajoute les champs de l'entité que l'on veut à notre formulaire
                 $form
-                ->add('nom',     TextType::class)
-                ->add('role',    TextType::class)
-                ->add('ajouter', SubmitType::class)
-        ;
+                        ->add('nom',     TextType::class)
+                        ->add('role',    TextType::class)
+                        ->add('ajouter', SubmitType::class)
+                ;
 
                 // On fait le lien Requête <-> Formulaire
                 $form->handleRequest($request);

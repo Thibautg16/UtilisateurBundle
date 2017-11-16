@@ -287,7 +287,7 @@ class Utilisateur implements UserInterface, EquatableInterface, \Serializable {
         ) = unserialize($serialized);
     }
     
-        public function isEqualTo(UserInterface $user)
+    public function isEqualTo(UserInterface $user)
     {
         if (!$user instanceof Utilisateur) {
             return false;
