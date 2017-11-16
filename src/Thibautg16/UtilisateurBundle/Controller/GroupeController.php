@@ -2,7 +2,7 @@
 /*
  * Thibautg16/UtilisateurBundle/Controller/GroupeController.php;
  *
- * Copyright 2015 GILLARDEAU Thibaut (aka Thibautg16)
+ * Copyright 2017 GILLARDEAU Thibaut (aka Thibautg16)
  *
  * Authors :
  *  - Gillardeau Thibaut (aka Thibautg16)
@@ -11,164 +11,137 @@
 namespace Thibautg16\UtilisateurBundle\Controller;
 
 use Symfony\Bundle\FrameworkBundle\Controller\Controller;
+use Sensio\Bundle\FrameworkExtraBundle\Configuration\Security;
 use Symfony\Component\Security\Core\SecurityContext;
 use Symfony\Component\HttpFoundation\Response;
 use Symfony\Component\HttpFoundation\Request;
 
+use Symfony\Component\Form\Extension\Core\Type\TextType;
+use Symfony\Bridge\Doctrine\Form\Type\EntityType;
+use Symfony\Component\Form\Extension\Core\Type\SubmitType;
+use Symfony\Component\Form\Extension\Core\Type\RepeatedType;
+use Symfony\Component\Form\Extension\Core\Type\PasswordType;
+use Symfony\Component\Form\Extension\Core\Type\CheckboxType;
+
 use Thibautg16\UtilisateurBundle\Entity\Groupe;
+use Thibautg16\UtilisateurBundle\Form\GroupeType;
 
 use Doctrine\Common\Collections\ArrayCollection;
 
 class GroupeController extends Controller{
 
+        /**
+         * @Security("has_role('ROLE_SUPERADMIN')")
+         */
         public function listeAction(){
                 $em = $this->getDoctrine()->getManager();
-                // On vérifie si l'utilisateur (via les groupes) est autorisé à consulter cette page
-                if($em->getRepository('Thibautg16UtilisateurBundle:Groupe')->GroupeAutoriseRoute($this->getUser(), $this->container->get('request')->get('_route')) == TRUE){
-                        /****** On liste tous les services ******/
-                        // On prépare la connexion avec la bdd
-                        $em = $this->getDoctrine()->getManager();
 
-                        // On récupère tous les services actuellement en BDD
-                        $listeGroupe = $em
-                                ->getRepository('Thibautg16UtilisateurBundle:Groupe')
-                                ->findAll()
-                        ;
+                // on liste les objets
+                $listeGroupe = $em->getRepository('Thibautg16UtilisateurBundle:Groupe')->findAll();
 
-                        return $this->render('Thibautg16UtilisateurBundle:Groupe:liste.html.twig', array('listeGroupe' => $listeGroupe));
-                }
-                // Ici, $user est une instance de notre classe User mais n'est pas Admin
-                else{
-                        return $this->redirect($this->generateUrl('thibautg16_utilisateur_homepage'));
-                }
+                return $this->render('Thibautg16UtilisateurBundle:Groupe:liste.html.twig', array('listeGroupe' => $listeGroupe));
         }
 
+        /**
+         * @Security("has_role('ROLE_SUPERADMIN')")
+         */
         public function ajouterAction(Request $request){
                 $em = $this->getDoctrine()->getManager();
-                // On vérifie si l'utilisateur (via les groupes) est autorisé à consulter cette page
-                if($em->getRepository('Thibautg16UtilisateurBundle:Groupe')->GroupeAutoriseRoute($this->getUser(), $this->container->get('request')->get('_route')) == TRUE){
-                        // Création de l'objet Groupe
-                        $oGroupe = new Groupe();
 
-                        // On crée le FormBuilder grâce au service form factory
-                        $formBuilder = $this->get('form.factory')->createBuilder('form', $oGroupe);
+                // création de l'objet
+                $oGroupe = new Groupe();
 
-                        // On ajoute les champs de l'entité que l'on veut à notre formulaire
-                        $formBuilder
-                          ->add('nom',     'text')
-                          ->add('role',    'text')
-                          ->add('Ajouter',      'submit')
-                        ;
+                // creation du formulaire
+                $form = $this->createForm(GroupeType::class, $oGroupe);  
 
-                        // À partir du formBuilder, on génère le formulaire
-                        $form = $formBuilder->getForm();
+                // On ajoute les champs de l'entité que l'on veut à notre formulaire
+                $form
+                        ->add('nom',     TextType::class)
+                        ->add('role',    TextType::class)
+                        ->add('ajouter', SubmitType::class)
+                ;
 
-                        // On fait le lien Requête <-> Formulaire
-                        $form->handleRequest($request);
+                // On fait le lien Requête <-> Formulaire
+                $form->handleRequest($request);
 
-                        // On vérifie que les valeurs entrées sont correctes
+                // On vérifie que les valeurs entrées sont correctes
+                if ($form->isSubmitted()) {
                         if ($form->isValid()) {
+                                // On enregistre notre objet                       
+                                $em->persist($oGroupe);
+                                $em->flush();
 
-                          // On enregistre notre objet $oGroupe dans la base de données
-                          $em = $this->getDoctrine()->getManager();                         
-                          $em->persist($oGroupe);
-                          $em->flush();
+                                // On informe l'utilisateur de la réussite de la création de l'objet
+                                $request->getSession()->getFlashBag()->add('success', 'Création du groupe : '.$oGroupe->getNom().' effectuée avec succès.');
 
-                          // On informe l'utilisateur de la réussite de la création du groupe
-                          $request->getSession()->getFlashBag()->add('success', 'Création du groupe : '.$oGroupe->getNom().' effectuée avec succès.');
-
-                          // On redirige vers la page de visualisation de l'annonce nouvellement créée
-                          return $this->redirect($this->generateUrl('thibautg16_groupe_liste'));
+                                // On redirige vers la liste des groupes
+                                return $this->redirect($this->generateUrl('thibautg16_groupe_lister'));
                         }
+                }
 
-                        // À ce stade, le formulaire n'est pas valide car :
-                        // - Soit la requête est de type GET, donc le visiteur vient d'arriver sur la page et veut voir le formulaire
-                        // - Soit la requête est de type POST, mais le formulaire contient des valeurs invalides, donc on l'affiche de nouveau
-                        return $this->render('Thibautg16UtilisateurBundle:Groupe:ajouter.html.twig', array(
+                // Le formulaire n'est pas valide, donc on l'affiche de nouveau
+                return $this->render('Thibautg16UtilisateurBundle:Groupe:ajouter.html.twig', array(
                           'form' => $form->createView(), 'groupe' => $oGroupe));
-                }
-                // Ici, $user est une instance de notre classe User mais n'est pas Admin
-                else{
-                        return $this->redirect($this->generateUrl('thibautg16_utilisateur_homepage'));
-                }
         }
 
+        /**
+         * @Security("has_role('ROLE_SUPERADMIN')")
+         */        
         public function modifierAction($idGroupe, Request $request){
                 $em = $this->getDoctrine()->getManager();
-                // On vérifie si l'utilisateur (via les groupes) est autorisé à consulter cette page
-                if($em->getRepository('Thibautg16UtilisateurBundle:Groupe')->GroupeAutoriseRoute($this->getUser(), $this->container->get('request')->get('_route')) == TRUE){
-                        /****** On recherche les informations sur le service demandé ******/
-                        // On prépare la connexion avec la bdd
-                        $em = $this->getDoctrine()->getManager();
+   
+                // on récupére l'objet
+                $oGroupe= $em->getRepository('Thibautg16UtilisateurBundle:Groupe')->findOneById($idGroupe);
 
-                        // Récupération de l'objet groupe déjà existant, d'id $idGroupe.
-                        $oGroupe= $em->getRepository('Thibautg16UtilisateurBundle:Groupe')->findOneById($idGroupe);
+                // creation du formulaire
+                $form = $this->createForm(GroupeType::class, $oGroupe);  
 
-                        // On crée le FormBuilder grâce au service form factory
-                        $formBuilder = $this->get('form.factory')->createBuilder('form', $oGroupe);
+                // On ajoute les champs de l'entité que l'on veut à notre formulaire
+                $form
+                ->add('nom',     TextType::class)
+                ->add('role',    TextType::class)
+                ->add('ajouter', SubmitType::class)
+        ;
 
-                        // On ajoute les champs de l'entité que l'on veut à notre formulaire
-                        $formBuilder
-                          ->add('nom',     'text')
-                          ->add('role',    'text')
-                          ->add('Modifier',      'submit')
-                        ;
+                // On fait le lien Requête <-> Formulaire
+                $form->handleRequest($request);
 
-                        // À partir du formBuilder, on génère le formulaire
-                        $form = $formBuilder->getForm();
-
-                        // On fait le lien Requête <-> Formulaire
-                        // À partir de maintenant, la variable $produit contient les valeurs entrées dans le formulaire par le visiteur
-                        $form->handleRequest($request);
-
-                        // On vérifie que les valeurs entrées sont correctes
+                // On vérifie que les valeurs entrées sont correctes
+                if ($form->isSubmitted()) {
                         if ($form->isValid()) {
+                                // On enregistre notre objet
+                                $em->persist($oGroupe);
+                                $em->flush();
 
-                          // On l'enregistre notre objet $oGroupe dans la base de données
-                          $em->persist($oGroupe);
-                          $em->flush();
+                                $request->getSession()->getFlashBag()->add('success', 'Modification du groupe : '.$oGroupe->getNom().' effectuée avec succès.');
 
-                          $request->getSession()->getFlashBag()->add('success', 'Modification du groupe : '.$oGroupe->getNom().' effectuée avec succès.');
-
-                          // On redirige vers la page de visualisation des groupes
-                          return $this->redirect($this->generateUrl('thibautg16_groupe_liste'));
+                                // On redirige vers la liste des groupes
+                                return $this->redirect($this->generateUrl('thibautg16_groupe_lister'));
                         }
+                }
 
-                        // À ce stade, le formulaire n'est pas valide car :
-                        // - Soit la requête est de type GET, donc le visiteur vient d'arriver sur la page et veut voir le formulaire
-                        // - Soit la requête est de type POST, mais le formulaire contient des valeurs invalides, donc on l'affiche de nouveau
-                        return $this->render('Thibautg16UtilisateurBundle:Groupe:modifier.html.twig', array(
-                          'form' => $form->createView(), 'groupe' => $oGroupe));
-                }
-                // Ici, $user est une instance de notre classe User mais n'est pas Admin
-                else{
-                        return $this->redirect($this->generateUrl('thibautg16_utilisateur_homepage'));
-                }
+                // Le formulaire n'est pas valide, donc on l'affiche de nouveau
+                return $this->render('Thibautg16UtilisateurBundle:Groupe:modifier.html.twig', array(
+                        'form' => $form->createView(), 'groupe' => $oGroupe));
         }
 
+        /**
+         * @Security("has_role('ROLE_SUPERADMIN')")
+         */  
         public function supprimerAction($idGroupe, Request $request){
                 $em = $this->getDoctrine()->getManager();
-                // On vérifie si l'utilisateur (via les groupes) est autorisé à consulter cette page
-                if($em->getRepository('Thibautg16UtilisateurBundle:Groupe')->GroupeAutoriseRoute($this->getUser(), $this->container->get('request')->get('_route')) == TRUE){
-                        // On prépare la connexion avec la bdd
-                        $em = $this->getDoctrine()->getManager();
 
-                        // Récupération de l'objet Groupe déjà existant, d'id $idGroupe.
-                        $oGroupe = $em->getRepository('Thibautg16UtilisateurBundle:Groupe')->findOneById($idGroupe);
+                // on récupére l'objet
+                $oGroupe = $em->getRepository('Thibautg16UtilisateurBundle:Groupe')->findOneById($idGroupe);
                         
-                        // On supprimer le groupe $idGroupe
-                        $em->remove($oGroupe);
-                        $em->flush();
+                // on supprimer l'objet'
+                $em->remove($oGroupe);
+                $em->flush();
 
-                        // On confirme la supression du groupe
-                        $request->getSession()->getFlashBag()->add('success', 'Suppression du groupe : '.$oGroupe->getNom().' effectuée avec succès.');
+                // on confirme la supression du groupe
+                $request->getSession()->getFlashBag()->add('success', 'Suppression du groupe : '.$oGroupe->getNom().' effectuée avec succès.');
 
-                        // On redirige vers la liste des groupes
-                        return $this->redirect($this->generateUrl('thibautg16_groupe_liste'));
-                }
-                // Ici, $user est une instance de notre classe User mais n'est pas Admin
-                else{
-                        return $this->redirect($this->generateUrl('thibautg16_utilisateur_homepage'));
-                }
+                // on redirige vers la liste des groupes
+                return $this->redirect($this->generateUrl('thibautg16_groupe_lister'));
         }
 }

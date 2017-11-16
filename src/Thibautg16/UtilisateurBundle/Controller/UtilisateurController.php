@@ -2,7 +2,7 @@
 /*
  * Thibautg16/UtilisateurBundle/Controller/UtilisateurController.php;
  *
- * Copyright 2015 GILLARDEAU Thibaut (aka Thibautg16)
+ * Copyright 2017 GILLARDEAU Thibaut (aka Thibautg16)
  *
  * Authors :
  *  - Gillardeau Thibaut (aka Thibautg16)
@@ -31,25 +31,27 @@ use Doctrine\Common\Collections\ArrayCollection;
 class UtilisateurController extends Controller{
 
         /**
-         * @Security("has_role('ROLE_UTILISATEUR_ADMIN')")
+         * @Security("has_role('ROLE_SUPERADMIN')")
          */
         public function listerAction(){
                 $em = $this->getDoctrine()->getManager();
+
+                // on liste les objets
                 $listeUtilisateur = $em->getRepository('Thibautg16UtilisateurBundle:Utilisateur')->findAll();
 
                 return $this->render('Thibautg16UtilisateurBundle:Utilisateur:lister.html.twig', array('listeUtilisateur' => $listeUtilisateur));
         }
 
         /**
-         * @Security("has_role('ROLE_UTILISATEUR_ADMIN')")
+         * @Security("has_role('ROLE_SUPERADMIN')")
          */        
         public function ajouterAction(Request $request){
                 $em = $this->getDoctrine()->getManager();
 
-                // Création de l'objet
+                // création de l'objet
                 $oUtilisateur = new Utilisateur();
 
-                // On crée le FormBuilder grâce au service form factory
+                // creation du formulaire
                 $form = $this->createForm(UtilisateurType::class, $oUtilisateur);    
 
                 // On ajoute les champs de l'entité que l'on veut à notre formulaire
@@ -68,23 +70,22 @@ class UtilisateurController extends Controller{
                 // On vérifie que les valeurs entrées sont correctes
                 if ($form->isSubmitted()) {
                         if ($form->isValid()) {
-
-                        // On enregistre notre objet $oServices dans la base de données
-                        $em = $this->getDoctrine()->getManager();
-                        //$oUtilisateur->setCreePar($user);
+                                // On enregistre notre objet
+                                $em = $this->getDoctrine()->getManager();
+                                //$oUtilisateur->setCreePar($user);
                           
-                        $factory = $this->container->get('security.encoder_factory');                              
-                        $encoder = $factory->getEncoder($oUtilisateur);
-                        $password = $encoder->encodePassword($oUtilisateur->getPassword(), $oUtilisateur->getSalt());
-                        $oUtilisateur->setPassword($password);                          
+                                $factory = $this->container->get('security.encoder_factory');                              
+                                $encoder = $factory->getEncoder($oUtilisateur);
+                                $password = $encoder->encodePassword($oUtilisateur->getPassword(), $oUtilisateur->getSalt());
+                                $oUtilisateur->setPassword($password);                          
 
-                        $em->persist($oUtilisateur);
-                        $em->flush();
+                                $em->persist($oUtilisateur);
+                                $em->flush();
 
-                        $request->getSession()->getFlashBag()->add('success', 'Création du compte : '.$oUtilisateur->getUsername().' effectuée avec succès.');
+                                $request->getSession()->getFlashBag()->add('success', 'Création du compte : '.$oUtilisateur->getUsername().' effectuée avec succès.');
 
-                        // On redirige vers la liste des utilisateurs
-                        return $this->redirect($this->generateUrl('thibautg16_utilisateur_lister'));
+                                // On redirige vers la liste des utilisateurs
+                                return $this->redirect($this->generateUrl('thibautg16_utilisateur_lister'));
                         }
                 }
 
@@ -94,13 +95,13 @@ class UtilisateurController extends Controller{
         }
 
         /**
-         * @Security("has_role('ROLE_UTILISATEUR_ADMIN')")
+         * @Security("has_role('ROLE_SUPERADMIN')")
          */  
         public function modifierAction($idUtilisateur, Request $request){
                 $em = $this->getDoctrine()->getManager();
 
                 // on récupére l'objet
-                $oUtilisateur = $em->getRepository('Thibautg16UtilisateurBundle:Utilisateur')->find($idUtilisateur);
+                $oUtilisateur = $em->getRepository('Thibautg16UtilisateurBundle:Utilisateur')->findOneById($idUtilisateur);
 
                 // On crée le FormBuilder grâce au service form factory
                 $form = $this->createForm(UtilisateurType::class, $oUtilisateur);    
@@ -122,9 +123,7 @@ class UtilisateurController extends Controller{
                 if ($form->isSubmitted()) {
                         // On vérifie que les valeurs entrées sont correctes
                         if ($form->isValid()) {
-
-                                // On l'enregistre notre objet $oServices dans la base de données
-                                $em = $this->getDoctrine()->getManager();
+                                // On enregistre notre objet
                                 $em->persist($oUtilisateur);
                                 $em->flush();
 
@@ -133,15 +132,15 @@ class UtilisateurController extends Controller{
                                 // On redirige vers la liste des utilisateurs
                                 return $this->redirect($this->generateUrl('thibautg16_utilisateur_lister'));
                         }
-
-                        // Le formulaire n'est pas valide, donc on l'affiche de nouveau
-                        return $this->render('Thibautg16UtilisateurBundle:Utilisateur:modifier.html.twig', array(
-                                'form' => $form->createView(), 'utilisateur' => $oUtilisateur));
                 }
+                
+                // Le formulaire n'est pas valide, donc on l'affiche de nouveau
+                return $this->render('Thibautg16UtilisateurBundle:Utilisateur:modifier.html.twig', array(
+                        'form' => $form->createView(), 'utilisateur' => $oUtilisateur));
         }
 
         /**
-         * @Security("has_role('ROLE_UTILISATEUR_ADMIN')")
+         * @Security("has_role('ROLE_SUPERADMIN')")
          */  
         public function supprimerAction($idUtilisateur, Request $request){
                 $em = $this->getDoctrine()->getManager();
