@@ -1,5 +1,9 @@
-CHANGELOG for 0.2
+CHANGELOG for 0.3
 ===================
+
+* 0.3 (15-11-2017)
+    * Feature : gestion des autorisations à partir 
+	* Update : Symfony
 
 * 0.2 (30-12-2015)
 	* Feature : gestion des groupes (Entite Groupe)

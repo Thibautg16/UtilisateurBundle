@@ -9,7 +9,7 @@
 {% block fil_ariane %} 
 	{{ parent() }} 
     <li><a href="">Accueil</a></li>
-    <li><a href="{{ path('thibautg16_utilisateur_liste') }}">Utilisateurs</a></li>
+    <li><a href="{{ path('thibautg16_utilisateur_lister') }}">Utilisateurs</a></li>
 	<li class="active"><a href="{{ path('thibautg16_utilisateur_ajouter') }}">Ajouter</a></li>
 {% endblock %}
 
@@ -54,12 +54,20 @@
 						{{ form_widget(form.password.confirm, {'attr': {'class': 'form-control'}}) }}
 					</div>
 				</div>
-                                
+
                 <div class="form-group">
-					{{ form_label(form.Active, "Actif :", {'label_attr': {'class': 'col-sm-3 control-label'}}) }}
-					{{ form_errors(form.Active) }}
+					{{ form_label(form.groupes, "Groupes :", {'label_attr': {'class': 'col-sm-3 control-label'}}) }}
+					{{ form_errors(form.groupes) }}
 					<div class="col-sm-4">
-						{{ form_widget(form.Active, {'attr': {'class': 'form-control'}}) }}
+						{{ form_widget(form.groupes, {'attr': {'class': 'form-control'}}) }}
+					</div>
+				</div>
+
+                <div class="form-group">
+					{{ form_label(form.active, "Actif :", {'label_attr': {'class': 'col-sm-3 control-label'}}) }}
+					{{ form_errors(form.active) }}
+					<div class="col-sm-4">
+						{{ form_widget(form.active, {'attr': {'class': 'form-control'}}) }}
 					</div>
 				</div>
                 					
@@ -67,7 +75,7 @@
 					<span class="col-sm-3 control-label"> &nbsp; </span>
 					<div class="col-sm-4 btn-center">
 						{# Pour le bouton, pas de label ni d'erreur, on affiche juste le widget #}
-						{{ form_widget(form.Ajouter, {'attr': {'class': 'btn btn-primary'}}) }} 
+						{{ form_widget(form.ajouter, {'attr': {'class': 'btn btn-primary'}}) }} 
 					</div>
 				</div>     
 							

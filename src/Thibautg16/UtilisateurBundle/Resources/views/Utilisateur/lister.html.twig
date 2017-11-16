@@ -37,7 +37,7 @@
                     <td> {{ utilisateur.id }} </td>
                     <td> {% if utilisateur.username is defined %} {{ utilisateur.username }} {% endif %} </td>       
                     <td> {% if utilisateur.email is defined %} {{ utilisateur.email }} {% endif %} </td>
-                    <td> {% if utilisateur.niveau is defined %} {{ utilisateur.niveau }} {% endif %} </td>
+                    <td> {% if utilisateur.roles is defined %} {% for role in utilisateur.roles %} {{role}} {% endfor %} {% endif %} </td>
                     <td> {% if utilisateur.active == TRUE %} <span class="glyphicon glyphicon-ok"></span> {% endif %} </td> 
                     <td><a href="{{ path('thibautg16_utilisateur_modifier', {'idUtilisateur':utilisateur.id}) }}"><span class="glyphicon glyphicon-pencil"></span></a></td>
                     <td><a href="{{ path('thibautg16_utilisateur_supprimer', {'idUtilisateur':utilisateur.id}) }}"><span class="glyphicon glyphicon-remove"></span></a></td>
