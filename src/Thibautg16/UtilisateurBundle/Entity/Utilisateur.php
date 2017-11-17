@@ -202,7 +202,7 @@ class Utilisateur implements UserInterface, EquatableInterface, \Serializable {
      */
     public function getRoles()
     {
-        foreach($this->groupes as $groupe){$roles[]=$groupe->getRole(); } return $roles; 
+        foreach($this->groupes as $groupe){$roles[]=$groupe->getRolesGroupe(); } return $roles; 
     }
 
     /**

@@ -57,7 +57,7 @@ class GroupeController extends Controller{
                 // On ajoute les champs de l'entité que l'on veut à notre formulaire
                 $form
                         ->add('nom',     TextType::class)
-                        ->add('role',    TextType::class)
+                        ->add('roles_groupe',    EntityType::class, array('class' => 'Thibautg16UtilisateurBundle:Role', 'choice_label' => 'nom', 'multiple' => true))
                         ->add('ajouter', SubmitType::class)
                 ;
 
@@ -99,7 +99,7 @@ class GroupeController extends Controller{
                 // On ajoute les champs de l'entité que l'on veut à notre formulaire
                 $form
                         ->add('nom',      TextType::class)
-                        ->add('role',     TextType::class)
+                        ->add('roles_groupe',     EntityType::class, array('class' => 'Thibautg16UtilisateurBundle:Role', 'choice_label' => 'nom', 'multiple' => true))
                         ->add('modifier', SubmitType::class)
                 ;
 

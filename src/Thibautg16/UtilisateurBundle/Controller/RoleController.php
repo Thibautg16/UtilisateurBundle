@@ -49,15 +49,14 @@ class RoleController extends Controller{
                 $em = $this->getDoctrine()->getManager();
 
                 // création de l'objet
-                $oGroupe = new Groupe();
+                $oRole = new Role();
 
                 // creation du formulaire
-                $form = $this->createForm(GroupeType::class, $oGroupe);  
+                $form = $this->createForm(RoleType::class, $oRole);  
 
                 // On ajoute les champs de l'entité que l'on veut à notre formulaire
                 $form
                         ->add('nom',     TextType::class)
-                        ->add('role',    TextType::class)
                         ->add('ajouter', SubmitType::class)
                 ;
 
@@ -68,20 +67,20 @@ class RoleController extends Controller{
                 if ($form->isSubmitted()) {
                         if ($form->isValid()) {
                                 // On enregistre notre objet                       
-                                $em->persist($oGroupe);
+                                $em->persist($oRole);
                                 $em->flush();
 
                                 // On informe l'utilisateur de la réussite de la création de l'objet
-                                $request->getSession()->getFlashBag()->add('success', 'Création du groupe : '.$oGroupe->getNom().' effectuée avec succès.');
+                                $request->getSession()->getFlashBag()->add('success', 'Création du groupe : '.$oRole->getNom().' effectuée avec succès.');
 
                                 // On redirige vers la liste des groupes
-                                return $this->redirect($this->generateUrl('thibautg16_groupe_lister'));
+                                return $this->redirect($this->generateUrl('thibautg16_role_lister'));
                         }
                 }
 
                 // Le formulaire n'est pas valide, donc on l'affiche de nouveau
-                return $this->render('Thibautg16UtilisateurBundle:Groupe:ajouter.html.twig', array(
-                          'form' => $form->createView(), 'groupe' => $oGroupe));
+                return $this->render('Thibautg16UtilisateurBundle:Role:ajouter.html.twig', array(
+                          'form' => $form->createView(), 'role' => $oRole));
         }
 
         /**
@@ -116,7 +115,7 @@ class RoleController extends Controller{
                                 $request->getSession()->getFlashBag()->add('success', 'Modification du groupe : '.$oGroupe->getNom().' effectuée avec succès.');
 
                                 // On redirige vers la liste des groupes
-                                return $this->redirect($this->generateUrl('thibautg16_groupe_lister'));
+                                return $this->redirect($this->generateUrl('thibautg16_role_lister'));
                         }
                 }
 

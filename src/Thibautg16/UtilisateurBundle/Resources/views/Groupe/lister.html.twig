@@ -23,7 +23,7 @@
                 <tr>
                     <th data-toggle="true" data-type="numeric">#</th>
                     <th>Nom</th>
-                    <th>Role</th>
+                    <th>Roles</th>
                     <th>Modifier</th>
                     <th>Supprimer</th>
                 </tr>
@@ -34,7 +34,7 @@
                 <tr>
                     <td> {{ groupe.id }} </td>
                     <td> {% if groupe.nom is defined %} {{ groupe.nom }} {% endif %} </td>       
-                    <td> {% if groupe.role is defined %} {{ groupe.role }} {% endif %} </td>
+                    <td> {% if groupe.rolesGroupe is defined %} {% for role in groupe.rolesGroupe %} {{ role.nom }} {% endfor %} {% endif %} </td>
                     <td><a href="{{ path('thibautg16_groupe_modifier', {'idGroupe':groupe.id}) }}"><span class="glyphicon glyphicon-pencil"></span></a></td>
                     <td><a href="{{ path('thibautg16_groupe_supprimer', {'idGroupe':groupe.id}) }}"><span class="glyphicon glyphicon-remove"></span></a></td>
                 </tr>

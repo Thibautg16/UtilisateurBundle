@@ -32,9 +32,6 @@ class Groupe implements RoleInterface
     /** @ORM\Column(name="nom", type="string", length=50) */
     private $nom;
 
-    /** @ORM\Column(name="role", type="string", length=50, unique=true) */
-    private $role;
-
     /** @ORM\ManyToMany(targetEntity="Utilisateur", mappedBy="groupes") */
     private $users;
  
@@ -44,7 +41,7 @@ class Groupe implements RoleInterface
     public function __construct()
     {
         $this->users = new ArrayCollection();
-        $this->groupes = new ArrayCollection();
+        $this->roles_groupe = new ArrayCollection();
     }
 
    /**
@@ -80,25 +77,6 @@ class Groupe implements RoleInterface
         return $this->nom;
     }
     
-    /**
-     * Set role
-     *
-     * @param string role
-     * @return Groupe    
-     */
-    public function setRole($role)
-    {
-        $this->role = $role;
-    
-        return $this;
-    }
-
-    /** @see RoleInterface */
-    public function getRole()
-    {
-        return $this->role;
-    }
-
     /**
      * Add users
      *

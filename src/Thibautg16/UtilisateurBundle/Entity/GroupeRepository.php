@@ -20,55 +20,5 @@ use Doctrine\ORM\QueryBuilder;
  * repository methods below.
  */
 class GroupeRepository extends EntityRepository{
-	
-   /* 
-	* Return TRUE si l'utilisateur est autorisé à voir la page
-	* Retrun FALSE dans le cas contraire
-	*/
-	public function GroupeAutoriseRoute($User, $Route){	
-		// On récupère la liste des groupes auxquelles appartient l'utilisateur
-		$Groupes = $User->getGroupes();		
-				
-		foreach($Groupes as $Groupe){
-			// Si c'est un superadmin on autorise toutes les routes
-			if($Groupe->getRole() == 'ROLE_SUPERADMIN'){
-				return TRUE;
-			}
-			// On récupére la liste des routes autorisées pour ce groupe
-        	$Routes = $Groupe->getRoutes();  
-			  
-			foreach($Routes as $oroute){
-				// On regarde si '*' est présent dans $route
-				$route = $oroute->getRoute();
-				if(strpos($route, '*') === FALSE){
-					if($route == $Route){
-						// L'utilisateur est autorisé à accéder à cette page
-						return TRUE;
-					}
-				}
-				else{
-					// On prépare les variables nécessaires
- 					$aRoute = explode("_", $route);
-                    $aRoute2 = explode("_", $Route);
-					$aCount = count($aRoute);
-					
-					for ($i=0; $i < $aCount; $i++) { 
-						if ($i != $aCount -1) {
-							if ($aRoute2[$i] != $aRoute[$i]) {
-								return FALSE;
-							}
-						}
-						elseif($aRoute[$i] == '*') {
-							return TRUE;
-						}
-						else{
-							return FALSE;
-						}						 				
-					}					
-				}
-			}
-		}
-		// L'utilisateur n'est pas autorisé à accéder à cette page
-		return FALSE;
-	}
+
 }

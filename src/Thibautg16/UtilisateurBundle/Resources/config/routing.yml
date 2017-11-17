@@ -37,9 +37,9 @@ thibautg16_utilisateur_supprimer:
     path:  /utilisateur/supprimer/{idUtilisateur}
     defaults: { _controller: Thibautg16UtilisateurBundle:Utilisateur:supprimer}
 
-thibautg16_groupe_liste:
+thibautg16_groupe_lister:
     path:  /groupe/lister
-    defaults: { _controller: Thibautg16UtilisateurBundle:Groupe:liste}
+    defaults: { _controller: Thibautg16UtilisateurBundle:Groupe:lister}
     
 thibautg16_groupe_ajouter:
     path:  /groupe/ajouter
@@ -54,7 +54,7 @@ thibautg16_groupe_supprimer:
     defaults: { _controller: Thibautg16UtilisateurBundle:Groupe:supprimer}
 
 thibautg16_role_lister:
-    path:  /role/liste
+    path:  /role/lister
     defaults: { _controller: Thibautg16UtilisateurBundle:Role:lister}
 
 thibautg16_role_ajouter:
