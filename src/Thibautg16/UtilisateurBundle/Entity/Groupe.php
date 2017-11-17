@@ -35,7 +35,7 @@ class Groupe implements RoleInterface
     /** @ORM\ManyToMany(targetEntity="Utilisateur", mappedBy="groupes") */
     private $users;
  
-    /** @ORM\ManyToMany(targetEntity="Role", mappedBy="groupes_role") */
+    /** @ORM\ManyToMany(targetEntity="Role", inversedBy="groupes_role") */
     private $roles_groupe;
 
     public function __construct()

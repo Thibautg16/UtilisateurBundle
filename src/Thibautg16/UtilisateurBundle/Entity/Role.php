@@ -39,7 +39,7 @@ class Role
 
     /**
      *
-     * @ORM\ManyToMany(targetEntity="Groupe", inversedBy="roles_groupe")
+     * @ORM\ManyToMany(targetEntity="Groupe", mappedBy="roles_groupe")
      */
     private $groupes_role;    
 
