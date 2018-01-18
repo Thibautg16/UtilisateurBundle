@@ -27,6 +27,7 @@
                     <th data-hide="phone,tablet">Niveau</th>
                     <th>Actif</th>
                     <th>Modifier</th>
+                    <th>ModifierMDP</th>
                     <th>Supprimer</th>
                 </tr>
     		</thead>
@@ -40,6 +41,7 @@
                     <td> {% if utilisateur.roles is defined %} {% for role in utilisateur.roles %} {{role}} {% endfor %} {% endif %} </td>
                     <td> {% if utilisateur.active == TRUE %} <span class="glyphicon glyphicon-ok"></span> {% endif %} </td> 
                     <td><a href="{{ path('thibautg16_utilisateur_modifier', {'idUtilisateur':utilisateur.id}) }}"><span class="glyphicon glyphicon-pencil"></span></a></td>
+                    <td><a href="{{ path('thibautg16_utilisateur_modifierMDP', {'idUtilisateur':utilisateur.id}) }}"><span class="glyphicon glyphicon-pencil"></span></a></td>
                     <td><a href="{{ path('thibautg16_utilisateur_supprimer', {'idUtilisateur':utilisateur.id}) }}"><span class="glyphicon glyphicon-remove"></span></a></td>
                 </tr>
                 {% endfor %}

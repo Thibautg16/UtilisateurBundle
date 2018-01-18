@@ -33,6 +33,10 @@ thibautg16_utilisateur_modifier:
     path:  /utilisateur/modifier/{idUtilisateur}
     defaults: { _controller: Thibautg16UtilisateurBundle:Utilisateur:modifier}
 
+thibautg16_utilisateur_modifierMDP:
+    path:  /utilisateur/modifierMDP/{idUtilisateur}
+    defaults: { _controller: Thibautg16UtilisateurBundle:Utilisateur:modifierMDP}    
+
 thibautg16_utilisateur_supprimer:
     path:  /utilisateur/supprimer/{idUtilisateur}
     defaults: { _controller: Thibautg16UtilisateurBundle:Utilisateur:supprimer}

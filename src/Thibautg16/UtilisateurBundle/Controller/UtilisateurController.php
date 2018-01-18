@@ -110,6 +110,50 @@ class UtilisateurController extends Controller{
                 $form
                         ->add('username',  TextType::class)
                         ->add('email',     TextType::class)
+                        ->add('active',    CheckboxType::class, array('required' => false))
+                        ->add('groupes',   EntityType::class, array('class' => 'Thibautg16UtilisateurBundle:Groupe', 'choice_label' => 'nom', 'multiple' => true))
+                        ->add('modifier',  SubmitType::class)
+                ;
+
+                // On fait le lien Requête <-> Formulaire
+                $form->handleRequest($request);
+
+                // On vérifie que les valeurs entrées sont correctes
+                if ($form->isSubmitted()) {
+                        // On vérifie que les valeurs entrées sont correctes
+                        if ($form->isValid()) {
+                                // On enregistre notre objet
+                                $em->persist($oUtilisateur);
+                                $em->flush();
+
+                                $request->getSession()->getFlashBag()->add('success', 'Modification du compte : '.$oUtilisateur->getUsername().' effectuée avec succès.');
+
+                                // On redirige vers la liste des utilisateurs
+                                return $this->redirect($this->generateUrl('thibautg16_utilisateur_lister'));
+                        }
+                }
+
+                // Le formulaire n'est pas valide, donc on l'affiche de nouveau
+                return $this->render('Thibautg16UtilisateurBundle:Utilisateur:modifier.html.twig', array(
+                        'form' => $form->createView(), 'utilisateur' => $oUtilisateur));
+        }
+
+        /**
+         * @Security("has_role('ROLE_SUPERADMIN')")
+         */  
+        public function modifierMDPAction($idUtilisateur, Request $request){
+                $em = $this->getDoctrine()->getManager();
+
+                // on récupére l'objet
+                $oUtilisateur = $em->getRepository('Thibautg16UtilisateurBundle:Utilisateur')->findOneById($idUtilisateur);
+
+                // On crée le FormBuilder grâce au service form factory
+                $form = $this->createForm(UtilisateurType::class, $oUtilisateur);    
+                
+                // On ajoute les champs de l'entité que l'on veut à notre formulaire
+                $form
+                        ->add('username',  TextType::class)
+                        ->add('email',     TextType::class)
                         ->add('password',  RepeatedType::class, array('first_name' => 'password', 'second_name' => 'confirm','type' => PasswordType::class))
                         ->add('active',    CheckboxType::class, array('required' => false))
                         ->add('groupes',   EntityType::class, array('class' => 'Thibautg16UtilisateurBundle:Groupe', 'choice_label' => 'nom', 'multiple' => true))
@@ -123,6 +167,12 @@ class UtilisateurController extends Controller{
                 if ($form->isSubmitted()) {
                         // On vérifie que les valeurs entrées sont correctes
                         if ($form->isValid()) {
+                                // gestion mdp
+                                $factory = $this->container->get('security.encoder_factory');                              
+                                $encoder = $factory->getEncoder($oUtilisateur);
+                                $password = $encoder->encodePassword($oUtilisateur->getPassword(), $oUtilisateur->getSalt());
+                                $oUtilisateur->setPassword($password);     
+
                                 // On enregistre notre objet
                                 $em->persist($oUtilisateur);
                                 $em->flush();
