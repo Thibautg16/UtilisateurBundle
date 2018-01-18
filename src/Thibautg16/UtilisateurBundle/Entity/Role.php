@@ -77,4 +77,45 @@ class Role
     {
         return $this->nom;
     }
+    /**
+     * Constructor
+     */
+    public function __construct()
+    {
+        $this->groupes_role = new \Doctrine\Common\Collections\ArrayCollection();
+    }
+
+    /**
+     * Add groupesRole
+     *
+     * @param \Thibautg16\UtilisateurBundle\Entity\Groupe $groupesRole
+     *
+     * @return Role
+     */
+    public function addGroupesRole(\Thibautg16\UtilisateurBundle\Entity\Groupe $groupesRole)
+    {
+        $this->groupes_role[] = $groupesRole;
+
+        return $this;
+    }
+
+    /**
+     * Remove groupesRole
+     *
+     * @param \Thibautg16\UtilisateurBundle\Entity\Groupe $groupesRole
+     */
+    public function removeGroupesRole(\Thibautg16\UtilisateurBundle\Entity\Groupe $groupesRole)
+    {
+        $this->groupes_role->removeElement($groupesRole);
+    }
+
+    /**
+     * Get groupesRole
+     *
+     * @return \Doctrine\Common\Collections\Collection
+     */
+    public function getGroupesRole()
+    {
+        return $this->groupes_role;
+    }
 }

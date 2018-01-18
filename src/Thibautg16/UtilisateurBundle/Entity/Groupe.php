@@ -20,7 +20,7 @@ use Doctrine\ORM\Mapping as ORM;
  * @ORM\Table()
  * @ORM\Entity(repositoryClass="Thibautg16\UtilisateurBundle\Entity\GroupeRepository")
  */
-class Groupe implements RoleInterface
+class Groupe
 {
     /**
      * @ORM\Column(name="id", type="integer")
@@ -108,5 +108,39 @@ class Groupe implements RoleInterface
     public function getUsers()
     {
         return $this->users;
+    }
+
+    /**
+     * Add rolesGroupe
+     *
+     * @param \Thibautg16\UtilisateurBundle\Entity\Role $rolesGroupe
+     *
+     * @return Groupe
+     */
+    public function addRolesGroupe(\Thibautg16\UtilisateurBundle\Entity\Role $rolesGroupe)
+    {
+        $this->roles_groupe[] = $rolesGroupe;
+
+        return $this;
+    }
+
+    /**
+     * Remove rolesGroupe
+     *
+     * @param \Thibautg16\UtilisateurBundle\Entity\Role $rolesGroupe
+     */
+    public function removeRolesGroupe(\Thibautg16\UtilisateurBundle\Entity\Role $rolesGroupe)
+    {
+        $this->roles_groupe->removeElement($rolesGroupe);
+    }
+
+    /**
+     * Get rolesGroupe
+     *
+     * @return \Doctrine\Common\Collections\Collection
+     */
+    public function getRolesGroupe()
+    {
+        return $this->roles_groupe;
     }
 }
