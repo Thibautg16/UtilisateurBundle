@@ -31,7 +31,7 @@ use Doctrine\Common\Collections\ArrayCollection;
 class UtilisateurController extends Controller{
 
         /**
-         * @Security("has_role('ROLE_SUPERADMIN')")
+         * @Security("has_role('ROLE_UTILISATEUR_ADMIN')")
          */
         public function listerAction(){
                 $em = $this->getDoctrine()->getManager();
@@ -43,7 +43,7 @@ class UtilisateurController extends Controller{
         }
 
         /**
-         * @Security("has_role('ROLE_SUPERADMIN')")
+         * @Security("has_role('ROLE_UTILISATEUR_ADMIN')")
          */        
         public function ajouterAction(Request $request){
                 $em = $this->getDoctrine()->getManager();
@@ -95,7 +95,7 @@ class UtilisateurController extends Controller{
         }
 
         /**
-         * @Security("has_role('ROLE_SUPERADMIN')")
+         * @Security("has_role('ROLE_UTILISATEUR_ADMIN')")
          */  
         public function modifierAction($idUtilisateur, Request $request){
                 $em = $this->getDoctrine()->getManager();
@@ -139,7 +139,7 @@ class UtilisateurController extends Controller{
         }
 
         /**
-         * @Security("has_role('ROLE_SUPERADMIN')")
+         * @Security("has_role('ROLE_UTILISATEUR_ADMIN')")
          */  
         public function modifierMDPAction($idUtilisateur, Request $request){
                 $em = $this->getDoctrine()->getManager();
@@ -185,12 +185,12 @@ class UtilisateurController extends Controller{
                 }
 
                 // Le formulaire n'est pas valide, donc on l'affiche de nouveau
-                return $this->render('Thibautg16UtilisateurBundle:Utilisateur:modifier.html.twig', array(
+                return $this->render('Thibautg16UtilisateurBundle:Utilisateur:modifierMDP.html.twig', array(
                         'form' => $form->createView(), 'utilisateur' => $oUtilisateur));
         }
 
         /**
-         * @Security("has_role('ROLE_SUPERADMIN')")
+         * @Security("has_role('ROLE_UTILISATEUR_ADMIN')")
          */  
         public function supprimerAction($idUtilisateur, Request $request){
                 $em = $this->getDoctrine()->getManager();

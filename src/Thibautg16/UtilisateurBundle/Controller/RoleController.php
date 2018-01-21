@@ -31,7 +31,7 @@ use Doctrine\Common\Collections\ArrayCollection;
 class RoleController extends Controller{
 
         /**
-         * @Security("has_role('ROLE_SUPERADMIN')")
+         * @Security("has_role('ROLE_ROLE_ADMIN')")
          */
         public function listerAction(){
                 $em = $this->getDoctrine()->getManager();
@@ -43,7 +43,7 @@ class RoleController extends Controller{
         }
 
         /**
-         * @Security("has_role('ROLE_SUPERADMIN')")
+         * @Security("has_role('ROLE_ROLE_ADMIN')")
          */
         public function ajouterAction(Request $request){
                 $em = $this->getDoctrine()->getManager();
@@ -84,7 +84,7 @@ class RoleController extends Controller{
         }
 
         /**
-         * @Security("has_role('ROLE_SUPERADMIN')")
+         * @Security("has_role('ROLE_ROLE_ADMIN')")
          */        
         public function modifierAction($idRole, Request $request){
                 $em = $this->getDoctrine()->getManager();
@@ -124,7 +124,7 @@ class RoleController extends Controller{
         }
 
         /**
-         * @Security("has_role('ROLE_SUPERADMIN')")
+         * @Security("has_role('ROLE_ROLE_ADMIN')")
          */  
         public function supprimerAction($idRole, Request $request){
                 $em = $this->getDoctrine()->getManager();

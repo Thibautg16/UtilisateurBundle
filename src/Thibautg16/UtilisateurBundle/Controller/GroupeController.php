@@ -31,7 +31,7 @@ use Doctrine\Common\Collections\ArrayCollection;
 class GroupeController extends Controller{
 
         /**
-         * @Security("has_role('ROLE_SUPERADMIN')")
+         * @Security("has_role('ROLE_GROUPE_ADMIN')")
          */
         public function listerAction(){
                 $em = $this->getDoctrine()->getManager();
@@ -43,7 +43,7 @@ class GroupeController extends Controller{
         }
 
         /**
-         * @Security("has_role('ROLE_SUPERADMIN')")
+         * @Security("has_role('ROLE_GROUPE_ADMIN')")
          */
         public function ajouterAction(Request $request){
                 $em = $this->getDoctrine()->getManager();
@@ -85,7 +85,7 @@ class GroupeController extends Controller{
         }
 
         /**
-         * @Security("has_role('ROLE_SUPERADMIN')")
+         * @Security("has_role('ROLE_GROUPE_ADMIN')")
          */        
         public function modifierAction($idGroupe, Request $request){
                 $em = $this->getDoctrine()->getManager();
@@ -126,7 +126,7 @@ class GroupeController extends Controller{
         }
 
         /**
-         * @Security("has_role('ROLE_SUPERADMIN')")
+         * @Security("has_role('ROLE_GROUPE_ADMIN')")
          */  
         public function supprimerAction($idGroupe, Request $request){
                 $em = $this->getDoctrine()->getManager();
