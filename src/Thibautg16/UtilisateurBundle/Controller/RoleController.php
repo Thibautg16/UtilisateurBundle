@@ -39,7 +39,7 @@ class RoleController extends Controller{
                 // on liste les objets
                 $listeRole = $em->getRepository('Thibautg16UtilisateurBundle:Role')->findAll();
 
-                return $this->render('Thibautg16UtilisateurBundle:Role:lister.html.twig', array('listeRole' => $listeRole));
+                return $this->render('@Thibautg16Utilisateur/Role/lister.html.twig', array('listeRole' => $listeRole));
         }
 
         /**
@@ -79,7 +79,7 @@ class RoleController extends Controller{
                 }
 
                 // Le formulaire n'est pas valide, donc on l'affiche de nouveau
-                return $this->render('Thibautg16UtilisateurBundle:Role:ajouter.html.twig', array(
+                return $this->render('@Thibautg16Utilisateur/Role/ajouter.html.twig', array(
                           'form' => $form->createView(), 'role' => $oRole));
         }
 
@@ -119,7 +119,7 @@ class RoleController extends Controller{
                 }
 
                 // Le formulaire n'est pas valide, donc on l'affiche de nouveau
-                return $this->render('Thibautg16UtilisateurBundle:Role:modifier.html.twig', array(
+                return $this->render('@Thibautg16Utilisateur/Role/modifier.html.twig', array(
                         'form' => $form->createView(), 'role' => $oRole));
         }
 

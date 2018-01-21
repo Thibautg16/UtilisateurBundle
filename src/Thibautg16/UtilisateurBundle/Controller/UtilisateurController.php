@@ -39,7 +39,7 @@ class UtilisateurController extends Controller{
                 // on liste les objets
                 $listeUtilisateur = $em->getRepository('Thibautg16UtilisateurBundle:Utilisateur')->findAll();
 
-                return $this->render('Thibautg16UtilisateurBundle:Utilisateur:lister.html.twig', array('listeUtilisateur' => $listeUtilisateur));
+                return $this->render('@Thibautg16Utilisateur/Utilisateur/lister.html.twig', array('listeUtilisateur' => $listeUtilisateur));
         }
 
         /**
@@ -90,7 +90,7 @@ class UtilisateurController extends Controller{
                 }
 
                 // Le formulaire n'est pas valide, donc on l'affiche de nouveau
-                return $this->render('Thibautg16UtilisateurBundle:Utilisateur:ajouter.html.twig', array(
+                return $this->render('@Thibautg16Utilisateur/Utilisateur/ajouter.html.twig', array(
                         'form' => $form->createView(), 'utilisateur' => $oUtilisateur));
         }
 
@@ -134,7 +134,7 @@ class UtilisateurController extends Controller{
                 }
 
                 // Le formulaire n'est pas valide, donc on l'affiche de nouveau
-                return $this->render('Thibautg16UtilisateurBundle:Utilisateur:modifier.html.twig', array(
+                return $this->render('@Thibautg16Utilisateur/Utilisateur/modifier.html.twig', array(
                         'form' => $form->createView(), 'utilisateur' => $oUtilisateur));
         }
 
@@ -185,7 +185,7 @@ class UtilisateurController extends Controller{
                 }
 
                 // Le formulaire n'est pas valide, donc on l'affiche de nouveau
-                return $this->render('Thibautg16UtilisateurBundle:Utilisateur:modifierMDP.html.twig', array(
+                return $this->render('@Thibautg16Utilisateur/Utilisateur/modifierMDP.html.twig', array(
                         'form' => $form->createView(), 'utilisateur' => $oUtilisateur));
         }
 

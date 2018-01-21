@@ -39,7 +39,7 @@ class GroupeController extends Controller{
                 // on liste les objets
                 $listeGroupe = $em->getRepository('Thibautg16UtilisateurBundle:Groupe')->findAll();
 
-                return $this->render('Thibautg16UtilisateurBundle:Groupe:lister.html.twig', array('listeGroupe' => $listeGroupe));
+                return $this->render('@Thibautg16Utilisateur/Groupe/lister.html.twig', array('listeGroupe' => $listeGroupe));
         }
 
         /**
@@ -80,7 +80,7 @@ class GroupeController extends Controller{
                 }
 
                 // Le formulaire n'est pas valide, donc on l'affiche de nouveau
-                return $this->render('Thibautg16UtilisateurBundle:Groupe:ajouter.html.twig', array(
+                return $this->render('@Thibautg16Utilisateur/Groupe/ajouter.html.twig', array(
                           'form' => $form->createView(), 'groupe' => $oGroupe));
         }
 
@@ -121,7 +121,7 @@ class GroupeController extends Controller{
                 }
 
                 // Le formulaire n'est pas valide, donc on l'affiche de nouveau
-                return $this->render('Thibautg16UtilisateurBundle:Groupe:modifier.html.twig', array(
+                return $this->render('@Thibautg16Utilisateur/Groupe/modifier.html.twig', array(
                         'form' => $form->createView(), 'groupe' => $oGroupe));
         }
 
